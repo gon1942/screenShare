@@ -6,7 +6,7 @@
     <fragment
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/activity_settings"
-        android:name="com.bbogush.web_screen.SettingsFragment"
+        android:name="com.ryan.screenshare.SettingsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bbogush.web_screen">
-
-    <uses-feature android:name="android.hardware.camera.any" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    package="com.ryan.screenshare">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,10 +9,10 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+<!--    <uses-permission android:name="android.permission.RECORD_AUDIO" />-->
+<!--    <uses-permission android:name="android.permission.CAMERA" />-->
     <uses-permission android:name="android.permission.CAMERA" />
-    -->
 
     <application
         android:allowBackup="true"
@@ -32,10 +29,11 @@
             android:value="ca-app-pub-6312357173588580~1347138127" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.ryan.screenshare.MainActivity"
             android:launchMode="singleTop"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,19 +41,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.ryan.screenshare.SettingsActivity"
             android:label="@string/action_settings"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.ryan.screenshare.MainActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value="com.ryan.screenshare.MainActivity"/>
         </activity>
 
-        <activity android:name=".AdminActivity" android:theme="@style/Theme.Transparent"/>
+        <activity android:name="com.ryan.screenshare.AdminActivity" android:theme="@style/Theme.Transparent"/>
         <receiver
-            android:name=".AdminReceiver"
-            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            android:name="com.ryan.screenshare.AdminReceiver"
+            android:permission="android.permission.BIND_DEVICE_ADMIN"
+            android:exported="true">
             <meta-data
                 android:name="android.app.device_admin"
                 android:resource="@xml/policies" />
@@ -64,24 +63,25 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name=".MouseAccessibilityService"
-            android:enabled="true"
-            android:label="@string/app_name"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
+<!--        <service-->
+<!--            android:name="com.ryan.screenshare.MouseAccessibilityService"-->
+<!--            android:enabled="true"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.accessibilityservice.AccessibilityService" />-->
+<!--            </intent-filter>-->
 
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/mouse_accessibility_service_config" />
-        </service>
+<!--            <meta-data-->
+<!--                android:name="android.accessibility-service"-->
+<!--                android:resource="@xml/mouse_accessibility_service_config" />-->
+<!--        </service>-->
 
         <service
-            android:name=".AppService"
+            android:name="com.ryan.screenshare.AppService"
             android:enabled="true"
-            android:exported="false"
+            android:exported="true"
             android:foregroundServiceType="mediaProjection" />
     </application>
 </manifest>

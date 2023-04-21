@@ -1,0 +1,109 @@
+@charset "utf-8";
+/* 
+@font-face {
+   font-family: 'Noto Sans KR';
+   font-style: normal;
+   font-weight: 400;
+   src: url('fonts/NotoSansKR-Regular.woff2') format('woff2'),
+        url('fonts/NotoSansKR-Regular.woff') format('woff'),
+        url('fonts/NotoSansKR-Regular.otf') format('opentype');
+ } */
+
+
+
+
+/*--------------------
+기술지원
+----------------------*/
+.left {float:left}
+.text_center {text-align: center}
+.bottom_bg {width: 250px; height:360px; position: fixed; bottom:0; right:0; z-index: 99; background-size:  200px}
+
+.support {width: 100%; height: 100%;  color:#555; font-size: 13px; line-height: 22px; }
+.support h1 {background: #2d096a url('../images/askos_white.png') right 30px center no-repeat; background-size: 80px; padding:20px 30px; font-size:24px;  color:#fff; font-weight: 400}
+
+.support .license {background: #e6e6e6; padding:20px 30px;}
+.support .licenseok {background-image: linear-gradient(to right, #4fd6d8 0%, #8455d7 100%); padding:20px 30px 10px 30px; color:#fff}
+.support .licenseok span {font-size: 25px; line-height: 40px}
+.supp_con {padding:10px 10px 0 40px; line-height: 22px; font-size: 13px; letter-spacing: -0.5px}
+/* .supp_con {padding:30px 30px 0 160px; line-height: 22px; font-size: 13px; letter-spacing: -0.5px} */
+.intext {margin: 30px}
+
+
+input::placeholder{color: #999}
+input::-webkit-input-placeholder {color:#999; }
+input::-moz-placeholder          {color:#999;}
+input:-moz-placeholder           {color:#999;}
+input:-ms-input-placeholder      {color:#999;}
+
+textarea::placeholder{color: #999}
+textarea::-webkit-input-placeholder {color:#999;}
+textarea::-moz-placeholder          {color:#999;}
+textarea:-moz-placeholder           {color:#999;}
+textarea:-ms-input-placeholder      {color:#999;}
+
+input[type=text], input[type=password], textarea, button {font-family:'Noto Sans KR', '맑은 고딕', sans-serif;  box-sizing: border-box; margin-top:10px; vertical-align: top; color:#555;}
+input[type=text], input[type=password], textarea, button:focus {outline: none;}  
+.labelzero { display: none}
+
+.input_type1   {width: 400px;height:38px;font-size:14px; border-image: linear-gradient(to right, #4fd6d8 0%, #8455d7 100%);border-image-slice: 1;padding-left:10px; color:#555; background: #fff; float:left; }
+.input_type2   {width: 100%;height:35px;font-size:14px; color:#555; background: #f2f2f2; display: block; border:1px solid #ddd; border-radius: 5px; padding:0 20px}
+
+.btn_check     {cursor: pointer;display: inline-block; text-align: center; width: 40px; border:2px solid #b6bfcd; height: 38px; background: #b6bfcd url('../images/icon_checked.png') center no-repeat;  font-size: 0}
+.btn_checked   {cursor: pointer;display: inline-block; text-align: center; width: 40px; border:2px solid #8455d7; height: 38px; background: #8455d7 url('../images/icon_checked.png') center no-repeat;  font-size: 0}
+
+.supp_btn {margin:0 30px;}
+.btn_comm {cursor: pointer;display: inline-block; height: 40px; padding:0 20px 0 60px;  background: url('../images/icon_community.png') left -90px center no-repeat; border:2px solid #43c2d5; border-radius: 5px; font-size: 14px; line-height: 35px}
+.btn_contact {cursor: pointer;display: inline-block; height: 40px; padding:0 20px 0 60px;  background: url('../images/icon_contact.png') left 20px center no-repeat; border:2px solid #8157d7; border-radius: 5px; font-size: 14px; line-height: 35px}
+
+.btn_ok {cursor: pointer;display: inline-block; height: 40px; width:150px; text-align: center; border-radius: 40px; font-size: 14px; line-height: 35px; background: #2d096a; border: 0; color: #fff; }
+.btn_cancel {cursor: pointer;display: inline-block; height: 40px; width:150px; text-align: center; border-radius:40px; font-size: 14px; line-height: 35px; background: #5f6a77;border: 0; color: #fff;}
+
+.btn_comm:hover, .btn_ok:hover  {color:#43c2d5}
+.btn_contact:hover {color:#8157d7} 
+.btn_cancel:hover {opacity: 0.7}
+
+
+
+textarea {overflow: auto; border:1px solid #ccc; border-radius: 5px; padding:10px; width:100%; height: 150px; padding:20px; font-size: 14px;background: #f2f2f2;} 
+input[type=file] {width:500px;  display: block; height: 35px; vertical-align: middle; font-size: 14px; margin-top: 15px}
+input[type=file]:focus {outline: none;}  
+
+
+.con_wrap {padding:10px 30px;}
+.btn_comm2 { background: url('../images/icon_comm.png') left 20px center no-repeat; cursor: pointer;display: inline-block; background: #262f35; width: 300px; height: 40px; text-align: center; border-radius: 40px; font-size: 13px; line-height: 35px; height: 35px; color: #fff; text-decoration: none}
+.btn_comm2:hover  {background: #000;}
+
+.list_type1 {padding-left: 90px}
+.list_type1 li{display: block; }
+.list_type1 li span {color: #214bb6}
+.icon_bg1 {background: url('../images/icon_community.png') left 30px center no-repeat; background-size: 40px}
+
+.login { padding-left:0; width: 300px; text-align: center; margin: 20px auto; background: url('../../img/bg_login.png') center 0  no-repeat; background-size: 60px;padding-top: 80px}
+.login li {display: block}
+.login input  {width: 100%;  height:38px;font-size:14px;border: 2px solid #bfcad9; border-radius: 40px;  color:#555; background: #fff; padding-left: 20px; margin-top: 5px; vertical-align: middle }
+.login label {display: none; width: 70px;  vertical-align: middle } 
+.login input:focus { border: 2px solid #19bac9}
+
+.login button {cursor: pointer; width: 100%;  height: 40px; border-radius: 40px;  background: #2d096a; color: #fff; line-height: 35px; border: 1px solid #2d096a}
+.login button:hover  {background: #19bac9; border: 1px solid #19bac9}
+
+.userbox {background: #4f5d7a; font-size: 12px; color: #fff; height: 35px; line-height: 35px; text-align: center}
+.userbox a {font-size: 12px; color: #fff; margin-left:20px }
+.input_type3 {width: 100%;  height:38px;font-size:14px;border: 2px solid #bfcad9; border-radius: 40px;  color:#555; background: #fff; padding-left: 20px; margin-top: 5px; vertical-align: middle }
+.input_type3:hover  { border: 2px solid #19bac9}
+
+.table_type1 {height: 300px; overflow: auto; }
+/* .table_type1 table		{width:100%;border-top:1px solid #19bac9; } */
+.table_type1 thead th	{padding:10px 5px; color:#333;background-color:#f5f6fa;text-align:left;border-bottom:1px solid #e8e8e8; font-weight:400;line-height:17px}
+.table_type1 tbody td	{padding:5px 10px; border-bottom:1px solid #e8e8e8;text-align:left; ; color:#666; font-size:13px; line-height:17px}
+.table_type1 tbody tr:hover td	{background:#f1f4fb;}
+
+.con_wrap textarea {overflow: auto; border:2px solid #bfcad9; border-radius: 10px; padding:10px; width:100%; height: 150px; padding:20px; font-size: 14px;background: #fff;} 
+
+.mT20 {margin-top: 20px}
+
+.question { margin-top: 20px; border-bottom: 1px solid #e8e8e8;}
+.accordion { cursor: pointer;padding: 10px;border: none;text-align: left;outline: none;transition: 0.4s;border-top:1px solid #e8e8e8;}
+.active, .accordion:hover {}
+.panel {padding: 10px 30px;display: none;background-color: white;overflow: hidden;}

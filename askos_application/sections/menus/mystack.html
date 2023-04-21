@@ -1,0 +1,156 @@
+<style>
+.demo-box p img {width:500px;}
+</style>
+
+<template class="task-template">
+    <section id="mystack-section" class="section js-section u-category-menu">
+      <header class="section-header">
+        <div class="section-wrapper">
+          <h1>
+            <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-menu"></use></svg>
+            AskOS Community - 나의질문들..
+          </h1>
+          <h4>
+            우리는 코드를 가진 모든 사람을 위한 열린 커뮤니티입니다<br>
+            당신이 겪는 코딩에 대한 어려움을 질문을 통해 답을 얻고,
+            다른 사람들과 그 지식을 공유하고, 당신의 능력을 향상시킬수 있도록 돕습니다
+          </h4>
+          
+          <div id="searchBodyId" class="search" >
+            <p style="padding: 10px 10px;" id="searchInputLayer">
+              <input type="text" id="searchInput" placeholder="Enter Search Keyword" class=" input_type3" ></input>
+            </p>
+          </div>
+
+        </div>
+      </header>
+     
+      <div id="myQuestionViewLayer"></div>
+      
+    <script type="text/javascript">
+      // require('./renderer-process/menus/stack')
+    </script>
+      
+  
+<script type="text/javascript">
+
+  function fn_alert(arg){
+    const Dialogs = require('dialogs');
+    const dialogs = Dialogs()
+
+    $(".banner-text").css({"z-index": "0"});
+    dialogs.alert(arg, ok => {$(".banner-text").css({"z-index": "1000000000"});});
+  }
+
+  function loadMystack(){
+    document.getElementById("mystack-section").classList.add('is-shown')
+    myQuestionList();
+  }
+
+  
+  function myQuestionList(){
+    var fs = require("fs");
+    var osType = require('os');
+    // var dirpath = osType.homedir() + '/.config/hamonikr_finder/userinfo_config';
+    var dirpath  = osType.homedir() + '/.config/askos-support/userinfo_config';
+    var uuidData = fs.readFileSync(dirpath, 'utf8');
+    var unirest = require('unirest');
+
+    unirest.post('http://askos.co.kr/api/mylist')
+      .header('Accept', 'application/json')
+      .send({ "uuiduser": uuidData})
+      .end(function (response) {
+        var innerData = "";
+        var esResultObj = response.body;
+        
+        $("#myQuestionViewLayer").empty();
+      
+        if( typeof esResultObj == "undefined" ){
+          innerData += '<div class="demo">';
+          innerData += '<div class="demo-wrapper">';
+          innerData += '<div class="demo-meta u-avoid-clicks">검색결과가 없습니다.</div>';
+          innerData += '</div>';
+          innerData += '</div>';
+          $("#myQuestionViewLayer").append(innerData);
+        }
+        else {
+          if( esResultObj.listCount <= 0 ){
+
+            innerData += '<div class="demo">';
+            innerData += '<div class="demo-wrapper">';
+            innerData += '<div class="demo-meta u-avoid-clicks">검색결과가 없습니다.</div>';
+            innerData += '</div>';
+            innerData += '</div>';
+
+          } 
+          else {
+            var cusorVal = "";
+            var jsontext = esResultObj.list;
+            var contact = jsontext; //JSON.parse(jsontext);
+            innerData += '<div class="table">';
+            if( contact.length > 0 ){
+              var fileSharing = "";
+              for (var i = 0; i < contact.length; i++) {
+                
+                var fromDate = new Date(contact[i].regdt );
+                innerData += '<div class="demo">';
+                innerData += '<div class="demo-wrapper" id="'+contact[i].questionno+'">';
+                innerData += '<button id="stack-demo-toggle" class="js-container-target demo-toggle-button" data-value="'+contact[i].questionno+'" onClick="viewClick(this);">' + contact[i].title;
+                innerData += '<div class="demo-meta u-avoid-clicks">' + contact[i].userno + ' <span class="demo-meta-divider">|</span>' + is_valid_date(contact[i].regdt )+'</div>';
+                innerData += '</button>';
+                innerData += '<div  id="'+contact[i].questionno+'_view" ></div>';
+                innerData += '</div>';
+                innerData += '</div>';
+
+              }
+            }
+          }
+          $("#myQuestionViewLayer").html(innerData);
+        }
+      });
+  }
+
+
+function is_valid_date(date_str){
+    var yyyyMMdd = String(date_str);
+    var year = yyyyMMdd.substring(0,4);
+    var month = yyyyMMdd.substring(5,7);
+    var day = yyyyMMdd.substring(8,10);
+
+    return year+"-"+month+"-"+ day;
+}
+
+
+function viewClick(val){
+  var rowno = val.getAttribute("data-value");
+
+  if( $("#"+rowno).hasClass("is-open")  == true){
+    $("#"+rowno).removeClass("is-open");  
+    $("#"+rowno+"_view").empty();
+  }else{
+    $("#"+rowno).addClass("is-open");
+    var unirest = require('unirest');
+    unirest.post('http://localhost:8080/api/view')
+      .header('Accept', 'application/json')
+      .send({ "questionno": rowno})
+      .end(function (response) {
+    
+        var innerViewData = "";
+        var esResultObj = response.body;
+        var cusorVal = "";
+        var contact = esResultObj;
+        innerViewData += '<div class="demo-box">';
+        innerViewData +=contact.contents;
+        innerViewData +='</div>';
+        $("#"+rowno+"_view").append(innerViewData);
+
+      });
+  }
+}
+
+
+</script>
+    </section>
+  </template>
+  
+ 

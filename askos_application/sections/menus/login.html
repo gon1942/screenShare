@@ -1,0 +1,133 @@
+<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+<template class="task-template">
+  <section id="login-section" class="section js-section u-category-menu">
+    <header class="section-header">
+      <div class="section-wrapper" id="gernalLayer">
+        <h1>
+          <svg class="section-icon">
+            <use xlink:href="assets/img/icons.svg#icon-menu"></use>
+          </svg>
+          Hamonize Share Device List
+        </h1>
+        <!-- <h4>aaa</h4> -->
+        <span id="devideInfoLayer"></span>
+        <!-- <ul class="login"> 
+            <li>
+              <label for=""  >User ID</label>
+              <input type="text" name="userId" id="userId" value="invesume" class="input_type2 noneDragLayer" placeholder="Enter user name or user id"  />
+            </li>
+            <li>
+              <label for="" >Password</label>
+              <input type="password" name="userPw" id="userPw" value="exitem08" class="input_type2 noneDragLayer" placeholder="비밀번호를 입력해주세요"  />
+              <input type="hidden"" id="userIpAddress"></input>
+            </li>
+            <li>
+                <button type="button" onclick="setProfile();" class="noneDragLayer">확인</button>
+                <button type="button" onClick="cancleProfile();" class="noneDragLayer">취소</button>
+                
+            </li>
+            <li>
+                <div class="mT20 mB10">- SNS 계정으로 로그인하기 -</div>
+            </li>
+            <li>
+              
+              <a href="javascript:social('google');" class="btn_social" data-social="google"><img id="socialGoogle" src="assets/img/join_google.png" alt="google" style="width:70px; height:70px;"></a>
+                <a href="/login/github" class="btn_social" data-social="github"><img src="assets/img/join_github.png" alt="github" style="width:70px; height:70px;"></a>
+            </li>
+        </ul> -->
+      </div>
+    </header>
+  </section>
+</template>
+
+<script type="text/javascript">
+  const { ipcRenderer } = require("electron");
+
+
+
+  var innerSystemText = "";
+  const fs = require("fs");
+  fs.watch("/tmp/data.json", (eventType, filename) => {
+    try {
+      const data = fs.readFileSync("/tmp/data.json", "utf8");
+      console.log(data)
+      const devices = JSON.parse(data);
+      const devideInfoLayer = document.getElementById("devideInfoLayer");
+      devideInfoLayer.innerHTML = "";
+      
+      devices.forEach((device) => {
+        const li = document.createElement("li");
+        // li.textContent = `Model: ${device.model}, IP: ${device.ip}`;
+        li.textContent = `Model: ${device.model}`;
+        li.classList.add(`${device.model}`);
+        li.dataset.mode = device.model;
+        li.dataset.ip = device.ip;
+        li.dataset.port = device.port;
+        devideInfoLayer.appendChild(li);
+
+        li.addEventListener("click", () => {
+          console.log('click-=' + device.ip)
+          require('child_process').exec('google-chrome https://'+device.ip);
+        });
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
+  // document.querySelectorAll("#devideInfoLayer li").forEach((li) => {
+  //   li.addEventListener("click", function () {
+  //     const ip = this.dataset.ip; // 클릭한 li 태그의 data-ip 속성 값(IP 주소) 가져오기
+  //     window.open("https://" + ip + ":8080"); // 새 창에서 해당 IP 주소 열기
+  //   });
+  // });
+
+  function fn_alert(arg) {
+    const Dialogs = require("dialogs");
+    const dialogs = Dialogs();
+
+    $(".banner-text").css({ "z-index": "0" });
+    dialogs.alert(arg, (ok) => {
+      $(".banner-text").css({ "z-index": "1000000000" });
+    });
+  }
+  function social(kindSocialVal) {
+    $("#gernalLayer").hide();
+    $("#socialLayer").show();
+
+    console.log("kindSocialVal===" + kindSocialVal);
+
+    var w = document.getElementById("foo");
+    w.loadURL("http://askos.co.kr/login/form/app", { userAgent: "Chrome" });
+    w.addEventListener("will-navigate", (e) => {
+      const protocol = require("url").parse(e.url).protocol;
+      if (protocol === "http:" || protocol === "https:") {
+        if (e.url.indexOf("socialDataPage") != -1) {
+          var splitUrl = e.url.trim().split("?");
+
+          var dataSplit = splitUrl[1].split("&");
+          var retUserId = dataSplit[0];
+          var retUserNo = dataSplit[1];
+          var retUserName = dataSplit[2];
+
+          if (retUserId.split("=")[1] != "") {
+            retUserId = retUserId.split("=")[1];
+            retUserNo = retUserNo.split("=")[1];
+            retUserName = retUserName.split("=")[1];
+            // }else{
+            //   console.log("222222222222");
+          }
+
+          ipcRenderer.send(
+            "saveUserInfo",
+            retUserName.replace(/%20/g, " "),
+            "",
+            retUserId,
+            retUserNo
+          );
+          // ipcRenderer.send('saveUserInfo',  retval.usernm, retval.comylocation, retval.userid, retval.seq);
+        }
+      }
+    });
+  }
+</script>

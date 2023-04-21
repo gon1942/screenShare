@@ -1,0 +1,67 @@
+<style>
+.demo-box p img {width:500px;}
+</style>
+
+<template class="task-template">
+    <section id="stack-section" class="section js-section u-category-menu">
+      <header class="section-header">
+        <div class="section-wrapper">
+          <h1>
+            <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-menu"></use></svg>
+            Qr code
+          </h1>
+          <h4>
+            Qr code 생성
+          </h4>
+          
+          
+        
+
+
+          <div id="searchBodyId" class="search" >
+            <p style="padding: 10px 10px;" id="searchInputLayer">
+              <input type="text" id="searchInput" placeholder="Enter Search Keyword" class="input_type3" style="width: 100%; "></input>
+            </p>
+          </div>
+
+          <canvas id="canvas"></canvas>
+
+
+        </div>
+      </header>
+     
+      <div id="resultViewLayer"></div>
+      
+    <script type="text/javascript">
+      // require('./renderer-process/menus/stack')
+    </script>
+      
+  
+<script type="text/javascript">
+
+// var QRCode = require('qrcode')
+// var canvas = document.getElementById('canvas')
+// var localIp = "";
+// ipcRenderer.send('getLocalIp');
+// ipcRenderer.on('getLocalIpProc', (event, data ) => {
+//   localIp = data;
+// });
+
+
+// console.log("localIP-====11======333333333==="+ $("#localIP").val());
+
+// // QRCode.toCanvas(canvas, "localIp", function (error) {
+// //   if (error) console.error(error)
+// //   console.log('success!');
+// // })
+// QRCode.toCanvas(document.getElementById('canvas'), "localIp", function (error) {
+//     if (error) console.error(error)
+//     console.log('success!');
+//   })
+
+
+</script>
+    </section>
+  </template>
+  
+ 

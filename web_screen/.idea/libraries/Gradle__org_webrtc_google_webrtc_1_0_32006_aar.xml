@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: org.webrtc:google-webrtc:1.0.32006@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/android/caches/transforms-2/files-2.1/68e460f0ad60488ae019e5d00ae15b3c/jetified-google-webrtc-1.0.32006/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/android/caches/transforms-2/files-2.1/68e460f0ad60488ae019e5d00ae15b3c/jetified-google-webrtc-1.0.32006/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

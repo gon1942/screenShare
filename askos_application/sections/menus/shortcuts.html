@@ -1,0 +1,62 @@
+<template class="task-template">
+  <section id="shortcuts-section" class="section js-section u-category-menu">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-menu"></use></svg>
+          Keyboard Shortcuts
+        </h1>
+
+        <h3>The <code>globalShortcut</code> and <code>Menu</code> modules can be used to define keyboard shortcuts.</h3>
+
+        <p>
+          In Electron, keyboard shortcuts are called accelerators.
+          They can be assigned to actions in your application's Menu,
+          or they can be assigned globally so they'll be triggered even when
+          your app doesn't have keyboard focus.
+        </p>
+
+        <p>
+          Open the full documentation for the
+          <a class="u-exlink" href="http://electron.atom.io/docs/api/menu">Menu</a>,
+          <a class="u-exlink" href="http://electron.atom.io/docs/api/accelerator">Accelerator</a>,
+          and
+          <a class="u-exlink" href="http://electron.atom.io/docs/api/global-shortcut">globalShortcut</a>
+          APIs in your browser.
+        </p>
+
+      </div>
+    </header>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="shortcuts-demo-toggle" class="js-container-target demo-toggle-button">Register a global keyboard shortcut
+          <div class="demo-meta u-avoid-clicks">Supports: Win, macOS, Linux <span class="demo-meta-divider">|</span> Process: Main</div>
+        </button>
+        <div class="demo-box">
+          <p>
+            To try this demo, press <kbd class="normalize-to-platform">CommandOrControl+Alt+K</kbd> on your keyboard.
+          </p>
+
+          <h5>Main Process</h5>
+          <pre><code data-path="main-process/menus/shortcuts.js"></code></pre>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </section>
+</template>
+
+
+
+<script type="text/javascript">
+  // const shortcutsBtn = document.getElementById('button-shortcuts')
+  // shortcutsBtn.addEventListener('click', () => {
+  //     console.log("shutcut-=--------------------")
+  //     ipcRenderer.send('getSession');
+  // })
+
+</script>

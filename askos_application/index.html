@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="assets/css/variables.css" />
+    <link rel="stylesheet" href="assets/css/nativize.css" />
+    <link rel="stylesheet" href="assets/css/global.css" />
+    <link rel="stylesheet" href="assets/css/about.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/section.css" />
+    <link rel="stylesheet" href="assets/css/demo.css" />
+    <link rel="stylesheet" href="assets/css/github.css" />
+
+    <link rel="stylesheet" type="text/css" href="assets/css/css/common.css" />
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+
+    <link rel="import" href="sections/about.html" />
+    <!-- <link rel="import" href="sections/menus/shortcuts.html"> -->
+    <link rel="import" href="sections/menus/stack.html" />
+    <link rel="import" href="sections/menus/login.html" />
+    <link rel="import" href="sections/menus/question.html" />
+    <link rel="import" href="sections/menus/mystack.html" />
+
+    <style>
+      #placeHolder img {
+        width: 200px;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav js-nav">
+      <header class="nav-header">
+        <h1 class="nav-title">Hamonize <strong>Share</strong></h1>
+        <!-- <img src="assets/img/askos_favicon.ico"> -->
+        <!-- <svg class="nav-header-icon"><use xlink:href="assets/img/icons.svg#icon-electron"></use></svg> -->
+        <br />
+        <h3 id="userInfo"></h3>
+      </header>
+
+      <div class="nav-item u-category-menu">
+        <h5 class="nav-category">
+          <svg class="nav-icon">
+            <use xlink:href="assets/img/icons.svg#icon-menu"></use>
+          </svg>
+          Menus
+        </h5>
+        <!-- <button type="button" id="button-shortcuts" data-section="shortcuts" class="nav-button">Register keyboard <em>shortcuts</em></button> -->
+        <button
+          type="button"
+          id="button-login"
+          data-section="login"
+          class="nav-button"
+        >
+          Share <em> Device List</em>
+        </button>
+        <!-- <button
+          type="button"
+          id="button-stack"
+          data-section="stack"
+          class="nav-button"
+        >
+          AskOS <em>QR Code</em>
+        </button> -->
+        <!-- <button type="button" id="button-question" data-section="question" class="nav-button">AskOS <em>질문하기</em></button>
+      <button type="button" id="button-mystack" data-section="mystack" class="nav-button">AskOS <em>나의질문들</em></button> -->
+      </div>
+
+      <footer class="nav-footer">
+        <!-- <input type="hidden" name="loginGubun" id="loginGubun" value="" />
+        <input type="hidden" name="usernm" id="usernm" value="" />
+        <input type="hidden" name="comylocation" id="comylocation" value="" />
+        <input type="hidden" name="userid" id="userid" value="" />
+        <input type="hidden" name="seq" id="seq" value="" />
+        <input type="hidden" name="uuid" id="uuid" value="" /> -->
+        <input type="hidden" name="localIP" id="localIP" value="" />
+
+        <button
+          type="button"
+          id="button-about"
+          data-modal="about"
+          class="nav-footer-button"
+          style="margin-top: 160px;"
+        >
+          Device -> Pc
+        </button>
+       
+        <!-- <code><span id="systemInfoLayer"></span></code> -->
+        <!-- <span id="systemInfoLayer"></span>
+        <canvas id="canvas"></canvas> -->
+        <div id="placeHolder" ></div>
+        <a class="nav-footer-logo" href="javascript:;" aria-label="Homepage">
+          Device화면 공유를 위해 QR 코드를 스캔해주세요
+        </a>
+      </footer>
+    </nav>
+
+    <main class="content js-content"></main>
+
+    <script type="text/javascript" src="./assets/qrcode.js"></script>
+    <script>
+      require("./assets/imports");
+      require("./assets/ex-links");
+      require("./assets/nav");
+      require("./assets/demo-btns");
+      require("./assets/code-blocks");
+      require("./assets/normalize-shortcuts");
+
+      //== =======================================================
+      ipcRenderer.send("getLocalIp");
+      ipcRenderer.on("getLocalIpProc", (event, data) => {
+        const localIP = data;
+        $("#localIP").val(localIP);
+        var typeNumber = 4;
+        var errorCorrectionLevel = "L";
+        var qr = qrcode(typeNumber, errorCorrectionLevel);
+        qr.addData(data);
+        qr.make();
+        document.getElementById("placeHolder").innerHTML = qr.createImgTag();
+      });
+      //== =======================================================
+
+      // const fs = require("fs");
+      // fs.watch("/tmp/data.json", (eventType, filename) => {
+      //   console.log("\nThe file", filename, "was modified!");
+      //   console.log("The type of change was:", eventType);
+
+      //   fs.readFile("/tmp/data.json", "utf8", (err, data) => {
+      //     if (err) {
+      //       console.error(err);
+      //       return;
+      //     }
+      //     console.log(data);
+      //   });
+      // });
+      //== =======================================================
+
+      // ipcRenderer.send("getSystemInfo");
+      // ipcRenderer.on("getSystemInfoProc", (event, data) => {
+      //   const localIP = data.localIP;
+      //   $("#localIP").val(localIP);
+
+      //   var QRCode = require("qrcode");
+      //   var canvas = document.getElementById("canvas");
+      //   QRCode.toCanvas(
+      //     document.getElementById("canvas"),
+      //     $("#localIP").val(),
+      //     function (error) {
+      //       if (error) console.error(error);
+      //       console.log("success!");
+      //     }
+      //   );
+      //   const systemInfoLayerId = document.getElementById("systemInfoLayer");
+      //   $("#systemInfoLayer").html(localIP);
+      // });
+    </script>
+  </body>
+</html>

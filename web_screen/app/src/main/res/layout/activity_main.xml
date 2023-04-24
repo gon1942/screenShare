@@ -83,8 +83,9 @@
                 </LinearLayout>
             </LinearLayout>
 
+
             <ToggleButton
-                android:id="@+id/remoteControlEnableSwitch"
+                android:id="@+id/btnScan"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:layout_marginLeft="32dp"
@@ -93,11 +94,13 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/bg_button_off"
                 android:textColor="#4a4a4a"
-                android:textOff="@string/button_remote_control_on"
-                android:textOn="@string/button_remote_control_off" />
+                android:textOff="Scan QR Code"
+                android:textOn="Scan QR Code"
+                />
 
             <ToggleButton
                 android:id="@+id/startButton"
+                android:visibility="invisible"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
                 android:layout_marginLeft="32dp"
@@ -109,14 +112,28 @@
                 android:textOn="@string/button_stop" />
 
 
-            <Button
-                android:id="@+id/btnScan"
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:layout_below="@+id/editText"
-                android:text="Scan Your QR Code"
-                android:textAllCaps="false"
-                android:textSize="16sp" />
+<!--            <Button-->
+<!--                android:id="@+id/btnScan"-->
+<!--                android:layout_width="fill_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_below="@+id/editText"-->
+<!--                android:text="Scan Your QR Code"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textSize="16sp" />-->
+
+            <ToggleButton
+                android:id="@+id/remoteControlEnableSwitch"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_button_off"
+                android:textColor="#4a4a4a"
+                android:textOff="@string/button_remote_control_on"
+                android:textOn="@string/button_remote_control_off" />
 
             <TextView
                 android:id="@+id/tv_qr_readTxt"

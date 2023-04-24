@@ -9,6 +9,15 @@
             app:dialogMessage="@string/port_description"
             app:defaultValue="8080"
             app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="username"
+            app:title="@string/user_name"
+            app:dialogTitle="@string/user_name"
+            app:dialogMessage="@string/username_description"
+            app:defaultValue="홍길동"
+            app:useSimpleSummaryProvider="true" />
+
         <Preference
             app:key="remote_control"
             app:isPreferenceVisible="false"

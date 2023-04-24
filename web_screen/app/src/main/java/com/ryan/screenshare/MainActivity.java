@@ -19,16 +19,13 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -45,7 +42,17 @@ import android.widget.ToggleButton;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.Inet6Address;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int HANDLER_MESSAGE_UPDATE_NETWORK = 0;
 
     private int httpServerPort;
+    private String httpServerUserName;
 
     private AppService appService = null;
     private AppServiceConnection serviceConnection = null;
@@ -66,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
     private PermissionHelper permissionHelper;
 
 //    private AdView adView;
-    private String str, receiveMsg;
-    private HttpRestApi httpRestApi = null;
+    private String str, receiveMsg, serverUrl;
+    private HttpStartRest httpRestApi = null;
     TextView tv_qr_readTxt;
 
     //qr
@@ -164,6 +172,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void stop() {
         Log.d(TAG, "Stream stop");
+
+
+        ToggleButton startButton = findViewById(R.id.startButton);
+        startButton.setVisibility(View.GONE);
+
+
+//        ToggleButton startButton = findViewById(R.id.startButton);
+//        startButton.setVisibility(1);
+
+        ToggleButton scanButton = findViewById(R.id.btnScan);
+        scanButton.setVisibility(View.VISIBLE);
+
+//        if( serverUrl == ""){
+//            ToggleButton scanButton = findViewById(R.id.btnScan);
+//            scanButton.setVisibility(View.GONE);
+//        }
+//        Log.d(TAG, "Stream stop ----serverUrl " + serverUrl);
+        new HttpStopRest().execute(serverUrl);
+
         if (!AppService.isServiceRunning())
             return;
 
@@ -266,6 +293,7 @@ public class MainActivity extends AppCompatActivity {
 
         unbindService(serviceConnection);
         serviceConnection = null;
+
     }
 
     private class AppServiceConnection implements ServiceConnection {
@@ -327,22 +355,24 @@ public class MainActivity extends AppCompatActivity {
                     resetRemoteControlSwitch();
                 break;
             default:
+
+
+
                 IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-//                tv_qr_readTxt.setText(result.getContents());
-//                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-
                 TextView connectionURL = findViewById(R.id.connectionURL);
-                Log.d(TAG, "url111222===============================" + connectionURL.getText());
-
                 String urlInfo = (String) connectionURL.getText();
-                Log.d(TAG, "url11122233333333===============================" + urlInfo);
-//                new HttpRestApi().execute((String) connectionURL.getText()).toString();
+                serverUrl = result.getContents();
 
-                new HttpRestApi().execute(urlInfo).toString();
+
+                new HttpStartRest().execute(urlInfo, serverUrl, httpServerUserName);
+//                GETFunction(urlInfo, serverUrl);
+
+
+
+                ToggleButton startButton = findViewById(R.id.startButton);
+                startButton.setVisibility(1);
 
                 setStartButton();
-//                resetStartButton();
-
                 break;
         }
 
@@ -350,9 +380,51 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+
+    public String GETFunction(String urlInfo, String serverUrl) {
+        try {
+
+            String deviceUrl = urlInfo.replace("https://", "");
+            String deviceModel = android.os.Build.MODEL;
+//            URL url = new URL("http://"+serverUrl+"/test/"+deviceModel+"/"+deviceUrl);
+            String setUrl = "http://192.168.0.218:3000/api/users/user?user_id=1";
+            URL url = new URL(setUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+            conn.setRequestMethod("GET");
+            conn.setConnectTimeout(15000);
+            conn.setReadTimeout(10000);
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+
+            InputStream is = conn.getInputStream();
+            StringBuilder sb = new StringBuilder();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            String result;
+            while ((result = br.readLine()) != null) {
+                sb.append(result + '\n');
+            }
+
+            result = sb.toString();
+
+            return result;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Log.d("ERROR", "EXCEPTION_ERROR");
+        return null;
+    }
+
     private void setStartButton() {
         ToggleButton startButton = findViewById(R.id.startButton);
         startButton.setChecked(true);
+
+        ToggleButton scanButton = findViewById(R.id.btnScan);
+        scanButton.setVisibility(View.INVISIBLE);
+
     }
 
     private void resetStartButton() {
@@ -451,12 +523,25 @@ public class MainActivity extends AppCompatActivity {
                 String url = "https://" + address.getAddress().getHostAddress() + ":" + httpServerPort;
                 TextView connectionURL = findViewById(R.id.connectionURL);
                 connectionURL.setText(url);
-                Log.d(TAG, "url111===============================" + connectionURL.getText());
+                Log.d(TAG, "httpServerUserName 999===============================" + httpServerUserName);
                 urlsHeader.setText(getResources().getString(R.string.urls_header));
                 urlLayout.setVisibility(View.VISIBLE);
+
+                Log.d(TAG, "urlUpdate serverUrl===============================" + serverUrl  );
+
+                if(serverUrl != null ){
+                    Log.d(TAG, "httpServerUserName========================" + httpServerUserName);
+                    new HttpStartRest().execute(url, serverUrl, httpServerUserName);
+//                    ToggleButton startButton = findViewById(R.id.startButton);
+//                    startButton.setVisibility(1);
+                }
+
+
                 break;
             }
         }
+
+
     }
 
     private String getIpAddress() {
@@ -551,6 +636,8 @@ public class MainActivity extends AppCompatActivity {
     public void initSettings() {
         settingsHelper = new SettingsHelper(getApplicationContext(), new OnSettingsChangeListener());
         httpServerPort = settingsHelper.getPort();
+        httpServerUserName = settingsHelper.getUserName();
+        Log.d(TAG, "httpServerUserName=============00==================" + httpServerUserName);
     }
 
     public void uninitSettings() {
@@ -562,6 +649,17 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onPortChange(int port) {
             httpServerPort = port;
+            urlUpdate();
+            if (AppService.isServiceRunning()) {
+                if (!appService.serverRestart(httpServerPort))
+                    resetStartButton();
+            }
+        }
+
+        @Override
+        public void onUsernameChange(String username) {
+            httpServerUserName = username;
+            Log.d(TAG, "httpServerUserName=============11==================" + httpServerUserName);
             urlUpdate();
             if (AppService.isServiceRunning()) {
                 if (!appService.serverRestart(httpServerPort))

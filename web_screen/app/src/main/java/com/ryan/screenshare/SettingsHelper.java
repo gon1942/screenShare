@@ -9,12 +9,17 @@ import androidx.preference.PreferenceManager;
 public class SettingsHelper {
     public interface OnSettingsChangeListener {
         void onPortChange(int port);
+
+        void onUsernameChange(String username);
+
     }
 
     private static final String TAG = SettingsHelper.class.getSimpleName();
 
     private static final int HTTP_SERVER_PORT_DEFAULT = 8080;
+    private static final String HTTP_SERVER_USERNAME_DEFAULT = "홍길동";
     private static final String SETTINGS_NAME_PORT = "port";
+    private static final String SETTINGS_NAME_USER = "username";
     private static final String SETTINGS_NAME_REMOTE_CONTROL = "remote_control";
     private OnSettingsChangeListener onSettingsChangeListener;
 
@@ -48,6 +53,20 @@ public class SettingsHelper {
         return port;
     }
 
+
+    public String getUserName() {
+        String userNicname;
+        String portString = sharedPreferences.getString(SETTINGS_NAME_USER,HTTP_SERVER_USERNAME_DEFAULT);
+        try {
+            userNicname = portString;
+        } catch (Exception e) {
+            Log.d(TAG, "Failed to parse username settings");
+            userNicname = HTTP_SERVER_USERNAME_DEFAULT;
+        }
+
+        return userNicname;
+    }
+
     public void setRemoteControlEnabled(boolean enabled) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(SETTINGS_NAME_REMOTE_CONTROL, enabled);
@@ -74,6 +93,9 @@ public class SettingsHelper {
                 return;
             if (key.equals(SETTINGS_NAME_PORT)) {
                 onSettingsChangeListener.onPortChange(getPort());
+            }
+            if (key.equals(SETTINGS_NAME_USER)) {
+                onSettingsChangeListener.onUsernameChange(getUserName());
             }
         }
     }

@@ -1,5 +1,5 @@
 const settings = require('electron-settings')
-console.log("===============================nav")
+
 document.body.addEventListener('click', (event) => {
   if (event.target.dataset.section) {
     handleSectionTrigger(event)
@@ -18,7 +18,7 @@ function handleSectionTrigger (event) {
 
   // Display the current section
   const sectionId = `${event.target.dataset.section}-section`
-  console.log("sectionId===========++++>"+sectionId);
+  
   if("mystack-section" == sectionId){
     loadMystack();
   }else if("question-section" == sectionId){
@@ -35,7 +35,8 @@ function handleSectionTrigger (event) {
 }
 
 function activateDefaultSection () {
-  // document.getElementById('button-windows').click()
+  // alert(1);
+  document.getElementById('get-started').click()
 }
 
 function showMainContent () {
@@ -75,11 +76,11 @@ function displayAbout () {
 
 // Default to the view that was active the last time the app was open
 const sectionId = settings.get('activeSectionButtonId')
-if (sectionId) {
-  showMainContent()
-  const section = document.getElementById(sectionId)
-  if (section) section.click()
-} else {
+// if (sectionId) {
+//   showMainContent()
+//   const section = document.getElementById(sectionId)
+//   if (section) section.click()
+// } else {
   activateDefaultSection()
-  displayAbout()
-}
+  // displayAbout()
+// }

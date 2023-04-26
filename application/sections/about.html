@@ -4,12 +4,10 @@
 .news {
   /* width: 100%;  */
   width: var(--rainbow-button-width-inner);
-  margin-top: 10px; background:url('http://askos.co.kr/img/news.png') no-repeat center top 15px; background-size: 100px; text-align: center; padding-top: 120px; }
+  margin-top: 10px; text-align: center; padding-top: 120px; }
 .layer {
   font-size: 13px;
-     border-radius: 4px;
-    border: 1px solid;
-    border-color: var(--color-border);
+  border-color: var(--color-border);
      /* background-color: white; */
 }
 .news .title {font-weight: 500; font-size: 20px; line-height: 60px}
@@ -34,7 +32,6 @@
 }
 .about-right-logo {
     display: block;
-    margin: 0 auto;
     /* width: 320px; */
     max-width: 100%;
 }
@@ -45,51 +42,40 @@
     <div class="about-wrapper" style="background: url(assets/img/bg.jpg) no-repeat center;background-size: cover;height: 100%;">
       
       <header class="about-header">
-          <p><img class="about-right-logo" src="assets/img/askos_color.png" alt="askos logo" width="200px;"></p>
-            <p style="padding: 10px 30px;">ASKOS 커뮤니티는 모든 사람을 위한 열린 커뮤니티입니다.</p>
+          <!-- <p><img class="about-right-logo" src="assets/img/askos_color.png" alt="askos logo" width="200px;"></p> -->
+            <p style="padding: 90px 30px;">  </p>
            
-            <p style="padding: 10px 30px;">자유롭게 사용하고 있는 OS 및 오픈소스를 사용하시면서 발생하는 문제나 궁굼한 사항들을 서로 공유하고, 향상시킬수 있도록 재능을 기부해주세요. 
+            <!-- <p style="padding: 10px 30px;">자유롭게 사용하고 있는 OS 및 오픈소스를 사용하시면서 발생하는 문제나 궁굼한 사항들을 서로 공유하고, 향상시킬수 있도록 재능을 기부해주세요. 
               <a href="http://askos.co.kr"><U>ASKOS Community</U><span class="u-visible-to-screen-reader">(opens in new window)</span></a>
-            </p>
+            </p> -->
             
             
             <code class="language-bash" style="padding: 0px;" >
               <div class="news layer">
-                <h2>ASKOS 뉴스레터 구독하기</h2>
+                <h2>Hamonize Screen Share </h2>
                 <div>
                   <ul class="">
                     <li>
-                      <p>ASKOS 커뮤니티에서는 읽어볼만한 소식을 보내드립니다.<br>주변에 관심있는 사람들에게 이 뉴스레터를 공유해주세요!</p>
+                      <p>Hamonize Share Screen은 디바이스의 화면을 컴퓨터나 핸드폰에서 브라우저로 실시간 화면을 공유할 수 있습니다.</p>
                     </li>
+                    
                     <li>
-                      <label for=""  >이름</label>
-                      <input type="text" name="name" id="usenamerId" value="invesume" class="input_type3 " placeholder="이름을 입력해주세요"  />
-                    </li>
-                    <li>
-                      <label for="" >E-mail 주소</label>
-                      <input type="password" name="userPw" id="email" value="email" class="input_type3" placeholder="이메일을 입력해주세요"  />
-                    </li>
-                    <li>
-                        <button type="button" id="-myQuestion" onclick="setProfile();" class="btn-blue">ASKOS <em> - 뉴스레터 신청하기 -</em></button>
+                        <!-- <button type="button" id="-myQuestion" onclick="setProfile();" class="btn-blue">ASKOS <em> - 시작하기 -</em></button> -->
+                        <main class="about-sections" style="float:right">
+                          <footer class="about-section footer">
+                            <div class="rainbow-button-wrapper">
+                              <button id="get-started" class="about-button modal-hide">- 시작하기 -</button>
+                            </div>
+                          </footer>
+                        </main>
                     </li>
                    
                 </ul>
 
               </div>
-              </code>
+            </code>
       </header>
-      <main class="about-sections">
-       
-       
-
-
-        <footer class="about-section footer">
-          <div class="rainbow-button-wrapper">
-            <button id="get-started" class="about-button modal-hide">커뮤니티시작하기</button>
-          </div>
-        </footer>
-
-      </main>
+     
     </div>
   </div>
 </template>

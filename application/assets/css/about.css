@@ -4,7 +4,7 @@
   --about-space: 4rem;
 
   position: absolute;
-  display: flex;
+  /* display: flex; */
   top: 0;
   left: 0;
   right: 0;
@@ -34,7 +34,7 @@
 
 .about-header {
   padding: var(--about-space) 0;
-  border-bottom: 1px solid hsl(0,0%,88%);
+  /* border-bottom: 1px solid hsl(0,0%,88%); */
 }
 
 .about-logo {
@@ -89,7 +89,7 @@ footer.about-section {
 }
 
 .rainbow-button-wrapper {
-  --rainbow-button-width: 184px;
+  --rainbow-button-width: 162px;
   --rainbow-button-height: 50px;
   --rainbow-button-width-inner: 194px;
   --rainbow-button-height-inner: 44px;

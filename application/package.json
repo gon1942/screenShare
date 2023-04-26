@@ -1,6 +1,6 @@
 {
-  "name": "askos-user",
-  "productName": "Electron API asd",
+  "name": "hamonize-share",
+  "productName": "Hamonize-Share-Screen4",
   "version": "2.0.2",
   "homepage": "https://hamonikr.org/",
   "author": "HamoniKR Team <hamonikr-packages@googlegroups.com>",
@@ -90,13 +90,13 @@
   },
   "build": {
     "icon": "./build/icons",
-    "productName": "askos-user",
+    "productName": "hamonize-share",
     "appId": "askos.user.application",
     "asar": true,
     "protocols": {
-      "name": "askos-user",
+      "name": "hamonize-share",
       "schemes": [
-        "askos-user"
+        "hamonize-share"
       ]
     },
     "win": {

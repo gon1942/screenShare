@@ -1,4 +1,4 @@
-const {BrowserWindow, Menu, app, shell, dialog} = require('electron')
+const { BrowserWindow, Menu, app, shell, dialog } = require('electron')
 
 let template = [{
   label: 'Edit',
@@ -14,7 +14,7 @@ let template = [{
     type: 'separator'
   }, {
     label: 'Cut',
-    accelerator: 'CmdOrCtrl+X', 
+    accelerator: 'CmdOrCtrl+X',
     role: 'cut'
   }, {
     label: 'Copy',
@@ -86,7 +86,7 @@ let template = [{
           buttons: ['Ok'],
           message: 'This demo is for the Menu section, showing how to create a clickable menu item in the application menu.'
         }
-        dialog.showMessageBox(focusedWindow, options, function () {})
+        dialog.showMessageBox(focusedWindow, options, function () { })
       }
     }
   }]
@@ -123,7 +123,7 @@ let template = [{
   }]
 }]
 
-function addUpdateMenuItems (items, position) {
+function addUpdateMenuItems(items, position) {
   if (process.mas) return
 
   const version = app.getVersion()
@@ -154,7 +154,7 @@ function addUpdateMenuItems (items, position) {
   items.splice.apply(items, [position, 0].concat(updateItems))
 }
 
-function findReopenMenuItem () {
+function findReopenMenuItem() {
   const menu = Menu.getApplicationMenu()
   if (!menu) return
 
@@ -175,37 +175,38 @@ if (process.platform === 'darwin') {
   const name = app.getName()
   template.unshift({
     label: name,
-    submenu: [{
-      label: `About ${name}`,
-      role: 'about'
-    }, {
-      type: 'separator'
-    }, {
-      label: 'Services',
-      role: 'services',
-      submenu: []
-    }, {
-      type: 'separator'
-    }, {
-      label: `Hide ${name}`,
-      accelerator: 'Command+H',
-      role: 'hide'
-    }, {
-      label: 'Hide Others',
-      accelerator: 'Command+Alt+H',
-      role: 'hideothers'
-    }, {
-      label: 'Show All',
-      role: 'unhide'
-    }, {
-      type: 'separator'
-    }, {
-      label: 'Quit',
-      accelerator: 'Command+Q',
-      click: () => {
-        app.quit()
-      }
-    }]
+    submenu: [
+      {
+        label: `About ${name}`,
+        role: 'about'
+      }, {
+        type: 'separator'
+      }, {
+        label: 'Services',
+        role: 'services',
+        submenu: []
+      }, {
+        type: 'separator'
+      }, {
+        label: `Hide ${name}`,
+        accelerator: 'Command+H',
+        role: 'hide'
+      }, {
+        label: 'Hide Others',
+        accelerator: 'Command+Alt+H',
+        role: 'hideothers'
+      }, {
+        label: 'Show All',
+        role: 'unhide'
+      }, {
+        type: 'separator'
+      }, {
+        label: 'Quit',
+        accelerator: 'Command+Q',
+        click: () => {
+          app.quit()
+        }
+      }]
   })
 
   // Window menu.

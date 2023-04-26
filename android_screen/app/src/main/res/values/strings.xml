@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WebScreen</string>
+    <string name="app_name">Hamonize-Share</string>
     <string name="urls_header">Device Screen Share</string>
     <string name="button_remote_control_on">Enable remote control</string>
     <string name="button_remote_control_off">Disable remote control</string>

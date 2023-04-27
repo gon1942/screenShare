@@ -10,9 +10,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-        >
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,24 +31,6 @@
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
 
             </com.google.android.material.appbar.AppBarLayout>
-
-
-
-
-            <ToggleButton
-                android:id="@+id/remoteControlEnableSwitch"
-                android:visibility="invisible"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginRight="32dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/bg_button_off"
-                android:textColor="#4a4a4a"
-                android:textOff="@string/button_remote_control_on"
-                android:textOn="@string/button_remote_control_off" />
-
 
             <LinearLayout
                 android:id="@+id/urlLinerLayout"
@@ -133,13 +113,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <ToggleButton
+                android:id="@+id/remoteControlEnableSwitch"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_button_off"
+                android:textColor="#4a4a4a"
+                android:textOff="@string/button_remote_control_on"
+                android:textOn="@string/button_remote_control_off" />
 
         </LinearLayout>
 
     </ScrollView>
 
-
-
-
+    <RelativeLayout
+        android:id="@+id/adLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
 

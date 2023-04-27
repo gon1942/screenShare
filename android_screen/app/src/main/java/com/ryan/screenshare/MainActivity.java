@@ -3,12 +3,14 @@ package com.ryan.screenshare;
 
 
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.media.projection.MediaProjectionManager;
@@ -19,28 +21,31 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
-//import com.google.android.gms.ads.AdRequest;
-//import com.google.android.gms.ads.AdSize;
-//import com.google.android.gms.ads.AdView;
-//import com.google.android.gms.ads.MobileAds;
-//import com.google.android.gms.ads.initialization.InitializationStatus;
-//import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-//import com.google.zxing.integration.android.IntentIntegrator;
-//import com.google.zxing.integration.android.IntentResult;
-
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -73,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     private SettingsHelper settingsHelper = null;
     private PermissionHelper permissionHelper;
 
-//    private AdView adView;
+    private AdView adView;
     private String str, receiveMsg, serverUrl;
     private HttpStartRest httpRestApi = null;
     TextView tv_qr_readTxt;
@@ -110,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-//        initAds();
+        initAds();
 
         initSettings();
 
@@ -147,6 +152,39 @@ public class MainActivity extends AppCompatActivity {
         initPermission();
 
         initUrl();
+    }
+    private final long finishtimeed = 1000;
+    private long presstime = 0;
+
+    @Override
+    public void onBackPressed() {   // 뒤로가기 누르면 다이얼로그 생성
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("종료할까요?"); // 다이얼로그 제목
+        builder.setCancelable(false);   // 다이얼로그 화면 밖 터치 방지
+        builder.setPositiveButton("예", new AlertDialog.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+//                exit();
+                stop();
+                finish();
+            }
+        });
+
+        builder.setNegativeButton("아니요", new AlertDialog.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.setNeutralButton("취소", new AlertDialog.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show(); // 다이얼로그 보이기
+    }
+
+    public void exit() { // 종료
+//        super.onBackPressed();
     }
 
     @Override
@@ -596,42 +634,42 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    private void initAds() {
-//        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-//            @Override
-//            public void onInitializationComplete(InitializationStatus initializationStatus) {
-//            }
-//        });
-//
-//        RelativeLayout adLayout = findViewById(R.id.adLayout);
-//        adView = new AdView(this);
-//        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.
-//                LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-//        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-//
-//        String adUnitId = getString(BuildConfig.DEBUG ? R.string.adaptive_banner_ad_unit_id_test : R.string.adaptive_banner_ad_unit_id);
-//        adView.setAdUnitId(adUnitId);
-//        adLayout.addView(adView, layoutParams);;
-//
-//        AdSize adSize = getAdSize();
-//        adView.setAdSize(adSize);
-//
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        adView.loadAd(adRequest);
-//    }
+    private void initAds() {
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
 
-//    private AdSize getAdSize() {
-//        Display display = getWindowManager().getDefaultDisplay();
-//        DisplayMetrics outMetrics = new DisplayMetrics();
-//        display.getMetrics(outMetrics);
-//
-//        float widthPixels = outMetrics.widthPixels;
-//        float density = outMetrics.density;
-//
-//        int adWidth = (int) (widthPixels / density);
-//
-//        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
-//    }
+        RelativeLayout adLayout = findViewById(R.id.adLayout);
+        adView = new AdView(this);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.
+                LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+
+        String adUnitId = getString(BuildConfig.DEBUG ? R.string.adaptive_banner_ad_unit_id_test : R.string.adaptive_banner_ad_unit_id);
+        adView.setAdUnitId(adUnitId);
+        adLayout.addView(adView, layoutParams);;
+
+        AdSize adSize = getAdSize();
+        adView.setAdSize(adSize);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+    }
+
+    private AdSize getAdSize() {
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+
+        float widthPixels = outMetrics.widthPixels;
+        float density = outMetrics.density;
+
+        int adWidth = (int) (widthPixels / density);
+
+        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
+    }
 
     public void initSettings() {
         settingsHelper = new SettingsHelper(getApplicationContext(), new OnSettingsChangeListener());
